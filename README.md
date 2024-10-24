@@ -20,3 +20,4 @@ add:
 - support for more sources
 - more commands
 - slash commands
+- video streaming support
