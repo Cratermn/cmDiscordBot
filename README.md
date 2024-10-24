@@ -13,3 +13,10 @@ This is a Discord bot developed using the Eris library for Node.js. The bot supp
     * FFmpeg
     * youtube-dl
     * ytmusic-api
+
+TODO:
+restructure
+add:
+support for more sources
+more commands
+slash commands
