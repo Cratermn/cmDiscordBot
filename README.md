@@ -9,10 +9,8 @@ This is a Discord bot developed using the Eris library for Node.js. The bot supp
 ## **Prerequisites**
 
     * Node.js
-    * Eris
+    * Python
     * FFmpeg
-    * youtube-dl
-    * ytmusic-api
 
 ### **TODO:**<br/>
 restructure <br/>
