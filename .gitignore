@@ -1,0 +1,13 @@
+# Ignore everything
+*
+
+# Allow JSON files
+!/*.json
+
+# Allow src folder and its contents
+!/src
+!/src/**
+
+# Allow specific files in root
+!.gitignore
+!README.md

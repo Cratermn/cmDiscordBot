@@ -25,7 +25,20 @@ const bot = new Eris(process.env.API_KEY, {
         'guilds',         // To detect and interact with guilds (servers)
         'messageContent',  // To read the content of the messages
         'guildVoiceStates'
-    ]
+    ],
+    autoreconnect: true,
+});
+
+bot.on("error", (err: Error, shardID: number) => {
+    console.error(`Error on shard ${shardID}:`, err);
+});
+
+bot.on("disconnect", () => {
+    console.warn("Bot disconnected from Discord. Attempting to reconnect...");
+});
+
+bot.on("shardDisconnect", (err: Error, id: number) => {
+        console.warn(`Shard ${id} disconnected.`);
 });
 
 bot.on("ready", () => {
@@ -82,10 +95,6 @@ if (msg.content.toLowerCase() === '!display') {
 
 if (msg.content.toLowerCase().startsWith('!remove')) {
     remove(msg);
-}
-
-if (msg.content.toLowerCase() === "!play") {
-    play(msg);
 }
 
 if (msg.content.toLowerCase() === '!help') {
@@ -233,7 +242,7 @@ async function playURL(msg: Message, connection: VoiceConnection): Promise<void>
         const audioStream = fs.createReadStream(mp3FilePath);
         connection.play(audioStream, { type: "opus" });
 
-        audioStream.on('error', (err) => {
+        audioStream.on('error', (err: Error) => {
             console.error('Error with audio stream:', err);
         });
 
