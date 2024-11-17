@@ -1,6 +1,6 @@
 # Ignore everything
 *
-
+.env
 # Allow JSON files
 !/*.json
 
