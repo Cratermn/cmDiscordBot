@@ -1,4 +1,4 @@
-import {Song} from "./interfaces"
+import Song from "./song"
 
 export default class Queue {
 
@@ -21,11 +21,7 @@ export default class Queue {
     public display() {
         let que: string = "Songs in que:\n";
         for (let i = 0; i < this.songs.length; i++) {
-            if (this.songs[i].title === "Unknown") {
-                que = que.concat(`${i + 1}. ${this.songs[i].url} | Requested by: ${this.songs[i].requester}\n`);
-            } else {
-                que = que.concat(`${i + 1}. ${this.songs[i].title} | Requested by: ${this.songs[i].requester}\n`);
-            }
+            que = que.concat(`${i + 1}. ${this.songs[i].toString()}\n`);
         }
         return que;
     }

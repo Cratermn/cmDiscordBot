@@ -1,14 +1,6 @@
 import { Message } from "eris";
 import { promises as fsPromises } from 'fs';
-
-
-
-export interface Song {
-	title: string;
-	url: string;
-	requester: string;
-	source: Source;
-}
+import Song from "./song";
 
 // Used by to determine which downloader to use
 export enum Source {

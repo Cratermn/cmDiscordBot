@@ -1,4 +1,5 @@
-import { Downloader, Song } from "./interfaces";
+import { Downloader } from "./interfaces";
+import Song from "./song";
 
 
 export default class YTDownloader extends Downloader {
@@ -8,7 +9,7 @@ export default class YTDownloader extends Downloader {
     }
 
     public download(sng: Song): Promise<void> {
-        return this.youtubedl(sng.url, {
+        return this.youtubedl(sng.getURL(), {
             extractAudio: true,
             audioFormat: "mp3",
             preferFfmpeg: true,

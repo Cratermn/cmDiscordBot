@@ -1,6 +1,7 @@
-import {Downloader, Song, Source} from "./interfaces"
+import {Downloader, Source} from "./interfaces"
 import { Message, VoiceConnection } from "eris";
 import Queue from "./queue";
+import Song from "./song";
 import YTSearcher from "./ytSearcher";
 import YTDownloader from "./ytDownloader";
 
@@ -93,7 +94,7 @@ export default class MusicBot {
         // Remove the entry from the queue
         const removed = this.queue.remove(indexToRemove);  // Splice removes the entry and returns the removed item
     
-        this.sendMessage(this.getTextChannelID(msg), `Removed entry: ${removed[0].title}`);
+        this.sendMessage(this.getTextChannelID(msg), `Removed entry: ${removed[0].getTitle()}`);
     }
 
     private async parseQuery(msg: Message) {
@@ -114,8 +115,8 @@ export default class MusicBot {
                 throw new Error("Invalid command");
             }
 
-            this.sendMessage(this.getTextChannelID(msg), "Queued:\n" + sng.title + " | Requested by: " + sng.requester);
-            console.log("Created song: " + sng.title + " " + sng.url + " " + sng.requester);
+            this.sendMessage(this.getTextChannelID(msg), "Queued:\n" + sng.toString());
+            console.log("Created song: " + sng.toString());
             return sng;
         } catch (error: any) {
             console.error(`Error: ${error}`);
@@ -165,7 +166,7 @@ export default class MusicBot {
         try {
             // Step 1: Download the audio as MP3 and overwrite if necessary
             await Downloader.deleteAllFilesInDirectory();
-            switch(song.source) {
+            switch(song.getSource()) {
                 case Source.YOUTUBE:
                     await this.ytDownloader.download(song);
                     break;
@@ -182,7 +183,7 @@ export default class MusicBot {
                 console.error('Error with audio stream:', err);
             });
     
-            this.sendMessage(this.getTextChannelID(msg), `Now playing: ${song.url} | Requested by ${song.requester}`);
+            this.sendMessage(this.getTextChannelID(msg), `Now playing: ${song.nowPlaying()}`);
     
         } catch (err) {
             console.error("Error:", err);

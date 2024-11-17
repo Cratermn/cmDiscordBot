@@ -1,11 +1,11 @@
 import { Message } from "eris";
-import { Searcher, Song, Source } from "./interfaces";
-const api = require("youtube-sr").default;
-const source = Source.YOUTUBE;
+import { Searcher, Source } from "./interfaces";
+import Song from "./song";
+
 
 export default class YTSearcher extends Searcher {
-    private ytIDlength = 11;
-    
+    private maxDuration = 1200000;
+    private api = require("youtube-sr").default;
     constructor() {
         super();
     }
@@ -25,13 +25,13 @@ export default class YTSearcher extends Searcher {
     }
 
     private async getResults(query: string) {
-        return api.search(query + ' "topic"');
+        return this.api.search(query + ' "topic"');
     }
 
     private chooseSong(results: any) {
         console.log(results);
         for (let i = results.length - 1; i >= 0; i--) {
-            if (results[i].duration > 1200000) {
+            if (results[i].duration > this.maxDuration) {
                 results.splice(i)
             }
         }
@@ -51,20 +51,22 @@ export default class YTSearcher extends Searcher {
 
     private createSong(msg: Message, chosenSong: any): Song {
         console.log(chosenSong)
-        const title: string = chosenSong.title;
-        const url: string = chosenSong.url;
         let requester: string;
         if (msg.author.globalName) {
             requester = msg.author.globalName;
         } else {
             requester = msg.author.username;
         }
-        return {title, url, requester, source};
+        return new Song(chosenSong.title, chosenSong.url, requester, Source.YOUTUBE, chosenSong.channel);
     }
 
     private createSongFromUrl(msg: Message, url: string): Song {
-        let title: string = "Unknown";
-        let requester = msg.author.username;
-        return {title, url, requester, source}
+        let requester: string;
+        if (msg.author.globalName) {
+            requester = msg.author.globalName;
+        } else {
+            requester = msg.author.username;
+        }
+        return new Song("Unknown", url, requester, Source.YOUTUBE);
     }
 }
