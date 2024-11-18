@@ -99,21 +99,30 @@ export default class MusicBot {
 
     private async parseQuery(msg: Message) {
         let query = msg.content;
-    
-        this.addToQueue(msg, await this.getSong(msg, query));
+        try {
+            this.addToQueue(msg, await this.getSong(msg, query));
+        } catch (e) {
+            console.log(e);
+            this.sendMessage(this.getTextChannelID(msg), "No results found");
+        }
     }
 
     private async getSong(msg: Message, query: string): Promise<Song> {
         try {
             let sng: Song;
             let command = msg.content.split(" ")[0];
-            switch(command) {
-                case "!play":
-                    sng = await this.ytSearcher.search(msg);
-                    break;
-                default:
-                throw new Error("Invalid command");
+            try {
+                switch(command) {
+                    case "!play":
+                        sng = await this.ytSearcher.search(msg);
+                        break;
+                    default:
+                    throw new Error("Invalid command");
+                }
+            } catch (e) {
+                throw e;
             }
+
 
             this.sendMessage(this.getTextChannelID(msg), "Queued:\n" + sng.toString());
             console.log("Created song: " + sng.toString());

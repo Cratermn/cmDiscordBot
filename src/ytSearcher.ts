@@ -16,12 +16,15 @@ export default class YTSearcher extends Searcher {
         if (!query || query.trim() === "") {
             throw new Error("Invalid search");
         }
-
-        if (query.includes("youtube.com") || query.includes("youtu.be")) {
-            return this.createSongFromUrl(msg, query);
+        try {
+            if (query.includes("youtube.com") || query.includes("youtu.be")) {
+                return this.createSongFromUrl(msg, query);
+            }
+    
+            return this.createSong(msg, this.chooseSong(await this.getResults(query)));
+        } catch (e) {
+            throw e;
         }
-
-        return this.createSong(msg, this.chooseSong(await this.getResults(query)));
     }
 
     private async getResults(query: string) {
