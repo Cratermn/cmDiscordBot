@@ -281,12 +281,45 @@ export default class MusicBot {
     }
     
     private async sendMessage(id: string, message: string): Promise<void> {
+        const MAX_LENGTH = 2000; // Discord's message character limit
+    
         try {
-            this.bot.createMessage(id, message);
+            // Split the message if it exceeds the limit
+            if (message.length > MAX_LENGTH) {
+                const chunks = this.splitMessageByLine(message, MAX_LENGTH);
+                for (const chunk of chunks) {
+                    await this.bot.createMessage(id, chunk);
+                }
+            } else {
+                await this.bot.createMessage(id, message);
+            }
         } catch (e) {
-            console.log(e);
+            console.error("Failed to send message:", e);
         }
     }
+
+    private splitMessageByLine(message: string, maxLength: number): string[] {
+        const lines = message.split('\n');
+        const chunks: string[] = [];
+        let currentChunk = '';
+    
+        for (const line of lines) {
+            // Check if adding the next line would exceed the limit
+            if ((currentChunk + line).length > maxLength) {
+                chunks.push(currentChunk.trim());
+                currentChunk = '';
+            }
+            currentChunk += line + '\n';
+        }
+    
+        // Add the last chunk if there is any remaining content
+        if (currentChunk.trim().length > 0) {
+            chunks.push(currentChunk.trim());
+        }
+    
+        return chunks;
+    }
+    
     
     private getTextChannelID(msg: Message): string {
         return msg.channel.id;
