@@ -7,7 +7,7 @@ dotenv.config();
 
 let mBot: MusicBot;
 
-const bot = new Eris(process.env.API_KEY, {
+const bot = new Eris(process.argv[2], {
     intents: [
         'guildMessages',  // To receive messages in servers
         'guilds',         // To detect and interact with guilds (servers)

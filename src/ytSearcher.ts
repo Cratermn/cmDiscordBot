@@ -18,7 +18,8 @@ export default class YTSearcher extends Searcher {
         }
         try {
             if (query.includes("youtube.com") || query.includes("youtu.be")) {
-                return this.createSongFromUrl(msg, query);
+                let videoID = this.extractYouTubeID(query);
+                return this.createSong(msg, this.chooseSong(await this.api.search(`\"${videoID}\"`)));
             }
     
             return this.createSong(msg, this.chooseSong(await this.getResults(query)));
@@ -29,6 +30,13 @@ export default class YTSearcher extends Searcher {
 
     private async getResults(query: string) {
         return this.api.search(query + ' "topic"');
+    }
+
+    private extractYouTubeID(url: string): string | null {
+        const regex = /(?:https?:\/\/)?(?:[\w-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?.*?v=|embed\/|v\/|shorts\/))([\w-]{11})(?=[?&\/#]|$)/;
+        const match = url.match(regex);
+        
+        return match ? match[1] : null;
     }
 
     private chooseSong(results: any) {
@@ -60,16 +68,6 @@ export default class YTSearcher extends Searcher {
         } else {
             requester = msg.author.username;
         }
-        return new Song(chosenSong.title, chosenSong.url, requester, Source.YOUTUBE, chosenSong.channel);
-    }
-
-    private createSongFromUrl(msg: Message, url: string): Song {
-        let requester: string;
-        if (msg.author.globalName) {
-            requester = msg.author.globalName;
-        } else {
-            requester = msg.author.username;
-        }
-        return new Song("Unknown", url, requester, Source.YOUTUBE);
+        return new Song(chosenSong.title, chosenSong.url, requester, Source.YOUTUBE, chosenSong.duration / 1000, chosenSong.channel);
     }
 }

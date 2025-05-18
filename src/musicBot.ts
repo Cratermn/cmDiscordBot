@@ -23,15 +23,6 @@ export default class MusicBot {
     }
 
     public async parseMessage(msg: Message) {
-        if (msg.content === "!ping") {
-            console.log(`Message received: ${msg.content}`);
-            try {
-                this.sendMessage(this.getTextChannelID(msg), "Pong!");
-            } catch (e) {
-                console.log(e);
-            }
-    
-        }
     
         // Check for the !connect command
         if (msg.content.toLowerCase() === '!connect') {
@@ -161,7 +152,8 @@ export default class MusicBot {
         }
     
     }
-    
+
+
     
     private async playURL(msg: Message, connection: VoiceConnection): Promise<void> {
     
