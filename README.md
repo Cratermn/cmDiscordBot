@@ -13,9 +13,9 @@ This is a Discord bot developed using the Eris library for Node.js. The bot supp
     * FFmpeg
 
 ### **TODO:**<br/>
-restructure <br/>
 add:
 - support for more sources
 - more commands
 - slash commands
-- video streaming support
+- website?
+- dockerfile / easy install guide
