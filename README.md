@@ -22,4 +22,3 @@ add:
 - more commands
 - slash commands
 - website?
-- dockerfile / easy install guide
