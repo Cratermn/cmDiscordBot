@@ -1,0 +1,8 @@
+services:
+  cm-discord-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cmDiscordBot
+    environment:
+      TOKEN: "Input_Bot_Token_Here"

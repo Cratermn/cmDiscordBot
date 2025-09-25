@@ -6,6 +6,10 @@ This is a Discord bot developed using the Eris library for Node.js. The bot supp
    * 🎶 Play Audio: Play YouTube audio directly in a voice channel.
    * 📜 Queue System: Handle a queue of songs or audio clips.
 
+
+## **Install**
+    docker compose up --build -d
+
 ## **Prerequisites**
 
     * Node.js
@@ -13,9 +17,8 @@ This is a Discord bot developed using the Eris library for Node.js. The bot supp
     * FFmpeg
 
 ### **TODO:**<br/>
-restructure <br/>
 add:
 - support for more sources
 - more commands
 - slash commands
-- video streaming support
+- website?
