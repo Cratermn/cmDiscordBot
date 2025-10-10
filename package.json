@@ -12,7 +12,6 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@distube/ytdl-core": "^4.16.12",
     "dotenv": "^16.4.5",
     "eris": "^0.18.0",
     "ffmpeg-static": "^5.2.0",
@@ -20,7 +19,7 @@
     "ts-node": "^10.9.2",
     "youtube-dl-exec": "^3.0.25",
     "youtube-sr": "^4.3.11",
-    "ytdl-core": "^4.11.5",
+    "ytdlp-nodejs": "^2.3.4",
     "ytmusic-api": "^5.2.2"
   }
 }
