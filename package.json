@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/fluent-ffmpeg": "^2.1.27",
     "typescript": "^5.6.3"
   },
   "dependencies": {
@@ -19,7 +20,7 @@
     "ts-node": "^10.9.2",
     "youtube-dl-exec": "^3.0.25",
     "youtube-sr": "^4.3.11",
-    "ytdlp-nodejs": "^2.3.4",
+    "ytdlp-nodejs": "^2.3.5",
     "ytmusic-api": "^5.2.2"
   }
 }
